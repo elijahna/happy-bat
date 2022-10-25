@@ -4,5 +4,4 @@ For this project, you're going to be using JavaScript and the HTML Canvas to cre
 
 You can see instructions in easier to digest pages [here](https://thinkle.github.io/Screensaver-Project-Instructions/)
 
-
   
