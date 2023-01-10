@@ -1,13 +1,56 @@
-// console.log('Hello world!')
-
 import "./canvas";
-import {drawTrident} from './trident';
-import {animate} from  './animate'
-import {drawThingy} from './newthingy';
-// Draw two thingies...
-//drawThingy(50,50);
-//drawThingy(150,50);
+//import {bat} from "./bat";
+//import './sprite';
+import {ctx, canvas} from './canvas';
+import {bat} from './bat';
+import {startAnimation, paused, resume, pause} from './animation';
+//import {bat} from './sprite';
+//bat.draw(200,200,200,200)
+import "./background"
+setInterval(
+  ()=>{
+    bat.frame += 1;
+  },
+  1000/6 // 6 frames per second...
+)
 
-drawTrident(300,300);
-drawTrident(100,100);
-animate();
+// Gift from Hinkle - double click to pause or resume
+canvas.addEventListener(
+  "dblclick",
+  function () {
+    if (paused) {
+      resume()
+    } else {
+      pause();
+    }
+  }
+)
+
+canvas.addEventListener(
+  "click",
+  function () {
+    if (!paused) {bat.y -= 12}
+    //if (paused) {
+     // bat.y = 250;
+      //
+    //  resume();
+    //}
+  }
+)
+
+window.addEventListener(
+  'keydown',
+  function (event) {
+    if (event.key == 'ArrowDown') {
+      bat.y += 30;
+    
+    }
+    if (event.key == "s") {
+      bat.y +=  30;
+    }
+    bat.y-=10; 
+    bat.fallingSpeed = 0;
+  }
+)
+
+startAnimation();

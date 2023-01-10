@@ -1,6 +1,6 @@
-run = "vite"
+language="nodejs"
+run="yarn dev"
 entrypoint = "main.js"
-
 hidden = [".config", "tsconfig.json", "tsconfig.node.json", "vite.config.js", ".gitignore"]
 
 [nix]
