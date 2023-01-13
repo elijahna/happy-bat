@@ -22,6 +22,8 @@ export const bat = {
   x: 8,
   y: 200,
   fallingSpeed: 0,
+  speed : 120,
+  score : 0,
   stop: false,
   detectCollision() {
     // this.x is left side, this.y is top
@@ -46,6 +48,7 @@ export const bat = {
     // triangle.detectCollision(this.x+90,this.y)
   },
   update(elapsed) {
+    this.score += .1
     this.detectCollision();
     this.y += this.fallingSpeed * elapsed / 1000;
     if (this.y < 0) {
@@ -92,13 +95,15 @@ export const bat = {
       90, // Target Height
       //height size
     );
-    ctx.strokeRect(
-      this.x, this.y + 10, 55, 45
-    )
-
+    // debug line
+    //ctx.strokeRect(
+    //  this.x, this.y + 35, 55, 2
+    //)// shows bat hitbox
+    ctx.font = '18pt Futura'
     ctx.fillText(
-      `Speed: ${this.fallingSpeed.toFixed(1)}, y: ${this.y.toFixed(1)}`,
-      10, 10
+      `score ${this.score.toFixed(0)}`,
+      10, 40
+      
     )
   }
 }

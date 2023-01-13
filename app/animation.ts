@@ -23,11 +23,11 @@ function doAnimationStep(n) {
   }
   ts = n;
   if (!paused) { // if we are not paused
-  animators.forEach(
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+    animators.forEach(
     (o) => { if (o.update) { o.update(elapsed) } }
   );
-  }
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }  
   animators.forEach(
     (o) => o.draw()
   );

@@ -7,9 +7,15 @@ import {startAnimation, paused, resume, pause} from './animation';
 //import {bat} from './sprite';
 //bat.draw(200,200,200,200)
 import "./background"
+
+// update the bat sprite
 setInterval(
   ()=>{
-    bat.frame += 1;
+    // If the game is not paused
+    if (!paused) {
+      // show next frame
+      bat.frame += 1;
+    }
   },
   1000/6 // 6 frames per second...
 )

@@ -3,6 +3,7 @@ import { bat } from './bat'
 
 import { addAnimation } from './animation'
 
+let worldend = -500
 
 canvas.style.backgroundImage = 'url("cave2.png")'
 canvas.style.backgroundSize = '700px 500px'
@@ -21,9 +22,9 @@ export let triangle = {
     ctx.fill();
   },
   update(ms) {
-    this.x -= 70 * ms / 1000;
+    this.x -= bat.speed * ms / 1000;
     // loop...
-    if (this.x < -200) {
+    if (this.x < worldend) {
       // set us to something on the right
       this.x = 756;
     }
@@ -59,30 +60,50 @@ export let t = {
 
   },
   update(ms) {
-    this.x -= 70 * ms / 1000;
+    this.x -= bat.speed * ms / 1000;
     // loop...
-    if (this.x < -200) {
+    if (this.x < worldend) {
       // set us to something on the right
       this.x = 756;
     }
   },
-  detectCollision(x, y) {
-    if (x > this.x + 50) {
-      // If we are right of the triangle start
-      if (x < this.x + 126) {
-        // if we are left of the pointy part
-        if (y < 242) {
-          // if we're under the point
-          return true;
-        }
-      }
+  detectCollision(x, y) { 
+    if (checkRectangle(
+      this.x + 125, // rx (smaller = left)
+      0, // y (top)
+      20, // rectangle width 
+      // increase width going right
+      // shrink size going left
+      242, // height,
+      x,y
+    )) {
+      return true;
     }
-    return false;
   }
 }
 
 
-
+function checkRectangle (
+  rx : number, ry : number, rw : number, rh : number, 
+  x : number, y : number
+) {
+  //debug rectangle //shows hitboxes
+  // ctx.strokeRect(rx,ry,
+   //             rw,rh);
+  if (x > rx ) {
+      // If we are right of the rectangle start
+      if (x < rx + rw) {
+        // if we are left of the pointy part
+        if (y < ry+rh) {
+          // if we're under the point
+          if (y > ry) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+}
 export let r = {
   x: 300,  
   draw() {
@@ -92,28 +113,29 @@ export let r = {
     ctx.lineTo(this.x + 126, 146)
     ctx.lineTo(this.x, 138)
     ctx.fillStyle = "#90E4C1";
-    ctx.fill();
+    ctx.fill();   
   },
 
 
   update(ms) {
-    this.x -= 70 * ms / 1000;
-    if (this.x<-200) {
+    this.x -= bat.speed * ms / 1000;
+    if (this.x<worldend) {
       this.x = 756;
     }    
   },
   detectCollision(x, y) {
-    if (x > this.x + 50) {
-      // If we are right of the triangle start
-      if (x < this.x + 202) {
-        // if we are left of the pointy part
-        if (y < 329) {
-          // if we're under the point
-          return true;
-        }
-      }
+    if (checkRectangle(0,0,500,161,x,y)) {
+      return true
     }
-    return false;
+    if (checkRectangle(this.x+180, 0,42,329,x,y)) {
+      return true
+    }
+    if (checkRectangle(this.x+140, 0,40,279,x,y)) {
+      return true
+    }
+    if (checkRectangle(this.x+100, 0,40,249,x,y)) {
+      return true
+    }
   }
 }
 
@@ -132,8 +154,8 @@ export let i = {
 
   },
   update(ms) {
-    this.x -= 70 * ms / 1000;
-    if (this.x<-200)
+    this.x -= bat.speed * ms / 1000;
+    if (this.x<worldend)
       this.x = 756;
     return true;
     return false;
@@ -164,30 +186,46 @@ export let a = {
     ctx.lineTo(this.x, 438)
     ctx.stroke()
     ctx.fillStyle = "#90E4C1";
-    ctx.fill();
+    ctx.fill();   
   },
 
 
   update(ms) {
-    this.x -= 70 * ms / 1000;
-    if (this.x<-200)
+    this.x -= bat.speed * ms / 1000;
+    if (this.x<worldend) {
       this.x = 756;
+      bat.speed += 20
+    }
     return true;
     return false;
     
   },
   detectCollision(x, y) {
-    if (x > this.x + 50) {
-      // If we are right of the triangle start
-      if (x < this.x + 461) {
-        // if we are left of the pointy part
-        if (y > 311) {
-          // if we're under the point
-          return true;
-        }
-      }
+   /*  ctx.strokeRect(this.x+250,311,
+                461 - 50,100)
+    ctx.strokeRect(this.x+150,371,
+                461 - 50,100)*/
+    if (checkRectangle(this.x+350, // rx
+                       331, // ry
+                       100  , // width
+                       100, // height
+                       x,y)) {
+      return true
     }
-    return false;
+    if (checkRectangle(this.x+250, // rx
+                       361, // ry
+                       200  , // width
+                       100, // height
+                       x,y)) {
+      return true
+    }
+    if (checkRectangle(this.x+140, // x
+                       380, // y
+                       40, // w
+                       279, // h
+                       x,y)) {
+     return true
+   }
   }
 }
 
@@ -197,7 +235,7 @@ addAnimation(triangle)
 addAnimation(t)
 addAnimation(r)
 addAnimation(a)
-//addAnimation(i)
+//  addAnimation(i)
 //addAnimation(i)
 
 
